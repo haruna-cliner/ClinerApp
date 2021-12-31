@@ -1,14 +1,15 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { FlatList, KeyboardAvoidingView, Text, View } from "react-native";
-import Colors from "../themes/colors";
+import { FlatList, KeyboardAvoidingView, Text, View, StyleSheet } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
-import { contentLoading, todoFetch } from "../state/content.slice";
+import { contentLoading, selectTodos, todoFetch } from "../state/content.slice";
+import Colors from "../themes/colors";
 import ActivityIndicator from "../components/common/ActivityIndicator";
 
 function HomeScreen({ navigation }) {
   const [refreshing, setRefreshing] = useState(false);
   const dispatch = useDispatch();
   const loading = useSelector(contentLoading);
+  const todos = useSelector(selectTodos);
 
   useEffect(() => {
 
@@ -53,13 +54,15 @@ function HomeScreen({ navigation }) {
     <KeyboardAvoidingView style={[{ backgroundColor: Colors.primaryDark, width: "100%", height: "100%" }]}>
       <ActivityIndicator visible={refreshing || loading} height={"20%"} />
       <FlatList
-        data={DATA}
+        refreshing={refreshing}
+        onRefresh={onRefresh}
+        data={todos}
         renderItem={renderItem}
         keyExtractor={item => item.id}
       />
     </KeyboardAvoidingView>
   );
-};
+}
 
 
 const styles = StyleSheet.create({

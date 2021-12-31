@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice, isAnyOf } from "@reduxjs/toolkit";
 import todosApi from "../api/todosApi";
+import flashMessage from "../utils/flashMessage";
 
 const initialState = {
   todos: [],
@@ -8,7 +9,11 @@ const initialState = {
 
 export const todoFetch = createAsyncThunk(
   "content/todos/fetch",
-  async () => await todosApi.get());
+  async () => {
+    let response = await todosApi.get();
+    if (!response.ok) return new Promise.reject(response);
+    return response.data;
+  });
 
 const ContentSlice = createSlice({
   name: "content",
@@ -17,7 +22,11 @@ const ContentSlice = createSlice({
   extraReducers: builder => {
     builder
       .addCase(todoFetch.fulfilled, (state, { payload }) => {
-        console.log("Payload", payload);
+        state.todos = payload;
+        state.loading = false;
+      })
+      .addCase(todoFetch.rejected, state => {
+        flashMessage.danger("Couldn't process request", "Desc...");
         state.loading = false;
       })
       .addMatcher(isAnyOf(todoFetch.pending), state => {
@@ -27,5 +36,5 @@ const ContentSlice = createSlice({
 });
 
 export default ContentSlice.reducer;
-export const contentLoading = state => stae.content.loading;
+export const contentLoading = state => state.content.loading;
 export const selectTodos = state => state.content.todos;

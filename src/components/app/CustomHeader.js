@@ -15,7 +15,7 @@ const CustomHeader = ({ title, navigation }) => {
       }}
       rightComponent={
         <View style={styles.headerRight}>
-          <TouchableOpacity onPress={() => navigation.toggleDrawer()}>
+          <TouchableOpacity onPress={() => navigation.openDrawer()}>
             <Icon name="description" color="white" />
           </TouchableOpacity>
           <TouchableOpacity style={{ marginLeft: 10 }} onPress={link}>
