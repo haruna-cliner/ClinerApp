@@ -3,23 +3,21 @@ import todosApi from "../api/todosApi";
 import flashMessage from "../utils/flashMessage";
 
 const initialState = {
-  todos: [],
-  loading: false,
+  todos: [], loading: false,
 };
 
-export const todoFetch = createAsyncThunk(
-  "content/todos/fetch",
-  async () => {
-    let response = await todosApi.get();
-    if (!response.ok) return new Promise.reject(response);
-    return response.data;
-  });
+export const todoFetch = createAsyncThunk("content/todos/fetch", async () => {
+  let response = await todosApi.get();
+  if (!response.ok) return new Promise.reject(response);
+  return response.data;
+});
 
 const ContentSlice = createSlice({
-  name: "content",
-  initialState,
-  reducers: {},
-  extraReducers: builder => {
+  name: "content", initialState, reducers: {
+    deleteTodo: (state, action) => {
+      state.todos = state.todos.filter(e => e.id !== action.payload);
+    },
+  }, extraReducers: builder => {
     builder
       .addCase(todoFetch.fulfilled, (state, { payload }) => {
         state.todos = payload;
@@ -36,5 +34,6 @@ const ContentSlice = createSlice({
 });
 
 export default ContentSlice.reducer;
+export const { deleteTodo } = ContentSlice.actions;
 export const contentLoading = state => state.content.loading;
 export const selectTodos = state => state.content.todos;

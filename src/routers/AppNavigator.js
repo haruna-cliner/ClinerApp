@@ -4,16 +4,9 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 import { getHeaderTitle } from "@react-navigation/elements";
 import CustomHeader from "../components/app/CustomHeader";
 import HomeScreen from "../screens/HomeScreen";
+import NotificationsScreen from "../screens/NotificationScreen";
 
 // import tw from "tailwind-react-native-classnames";
-
-function NotificationsScreen({ navigation }) {
-  return (
-    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-      <Button onPress={() => navigation.goBack()} title="Go back home" />
-    </View>
-  );
-}
 
 function TodosScreen({ navigation }) {
   return (

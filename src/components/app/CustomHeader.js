@@ -7,25 +7,20 @@ const CustomHeader = ({ title, navigation }) => {
   const link = () => {
     Linking.openURL(`https://google.com`).then(console.log);
   };
-  return (
-    <Header
+  return (<Header
       leftComponent={{
-        icon: "menu",
-        color: "#fff",
+        icon: "menu", color: "#fff", onPress: () => navigation.openDrawer(),
       }}
-      rightComponent={
-        <View style={styles.headerRight}>
-          <TouchableOpacity onPress={() => navigation.openDrawer()}>
-            <Icon name="description" color="white" />
-          </TouchableOpacity>
-          <TouchableOpacity style={{ marginLeft: 10 }} onPress={link}>
-            <Icon type="antdesign" name="rocket1" color="white" />
-          </TouchableOpacity>
-        </View>
-      }
+      rightComponent={<View style={styles.headerRight}>
+        <TouchableOpacity onPress={() => navigation.openDrawer()}>
+          <Icon name="description" color="white" />
+        </TouchableOpacity>
+        <TouchableOpacity style={{ marginLeft: 10 }} onPress={link}>
+          <Icon type="antdesign" name="rocket1" color="white" />
+        </TouchableOpacity>
+      </View>}
       centerComponent={{ text: title, style: styles.heading }}
-    />
-  );
+    />);
 };
 
 const styles = StyleSheet.create({
@@ -36,21 +31,12 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     width: "100%",
     paddingVertical: 15,
-  },
-  heading: {
-    color: "white",
-    fontSize: 22,
-    fontWeight: "bold",
-  },
-  headerRight: {
-    display: "flex",
-    flexDirection: "row",
-    marginTop: 5,
-  },
-  subheaderText: {
-    color: "white",
-    fontSize: 16,
-    fontWeight: "bold",
+  }, heading: {
+    color: "white", fontSize: 22, fontWeight: "bold",
+  }, headerRight: {
+    display: "flex", flexDirection: "row", marginTop: 5,
+  }, subheaderText: {
+    color: "white", fontSize: 16, fontWeight: "bold",
   },
 });
 
